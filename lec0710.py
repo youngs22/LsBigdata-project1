@@ -173,3 +173,5 @@ df2
 var=["a","b","c","d"]
 var
 seaborn.countplot(x=bar)
+
+# 테스트
