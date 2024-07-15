@@ -29,6 +29,8 @@ sum(y)
 # 논리값의 True인 값만 다시 벡터 만듬
 a[a>3]
 
+import numpy as np
+
 np.random.seed(2024)
 a=np.random.randint(1,10000,5)
 # a[조건을 만족하는 논리형 벡터]
