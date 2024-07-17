@@ -84,3 +84,4 @@ np.nanmean(np.array([float(x) if x !="-" else np.nan for x in exam["math"]]))
 math_mean = exam.loc[exam["math"] != "-", "math"].mean()
 exam["math"] = exam["math"].replace("-",math_mean)
 exam
+
