@@ -7,7 +7,6 @@ import numpy as np
 
 exam = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/exam.csv")
 exam
-
 # query() 조건에 맞는 행 걸러냄
 exam.query("nclass==1")
 exam.query("nclass!=1")
