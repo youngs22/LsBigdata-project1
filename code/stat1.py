@@ -1,5 +1,7 @@
 # 균일 확률변수 만들기
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 num=int(input("숫자 num: "))
 
@@ -42,8 +44,29 @@ import numpy as np
 
 sum(np.arange(4) * np.array([1,2,2,1])/6)
 
+# 히스토그램 그리기
+data = np.random.rand(10)
 
+plt.clf()
 
+plt.hist(data, bins=4, alpha=0.7, color="blue")
+plt.title("Histogram of Numpy Vector")
+plt.xlabel("value")
+plt.ylabel("Frequency")
+plt.grid(False)
+plt.show()
+
+# 정규 분포 그리기
+x = np.random.rand(10000,5).mean(axis=1)
+
+plt.clf()
+
+plt.hist(x,bins=30, alpha=0.7,color="Green")
+plt.title("Histogram of Numpy Vector")
+plt.xlabel("value")
+plt.ylabel("Frequency")
+plt.grid(True)
+plt.show()
 
 
 
