@@ -47,3 +47,8 @@ p=np.array([1/6,2/6,2/6,1/6])
 Ex = sum(x * p)
 Ex2 = sum(x**2 * p)
 Ex2-Ex**2
+
+# 
+import numpy as np
+np.sqrt(9.52**2 / 16)
+np.sqrt(9.52**2 / 10)
