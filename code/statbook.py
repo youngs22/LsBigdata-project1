@@ -2,7 +2,7 @@ from scipy.stats import bernoulli
 
 # 베르누이 분포
 #  bernoulli.pmf(k, p)
-# 확률질량함수 pmf 확률변수가 갖는 값에 해당하는 확률을 저장하고 있는 함수
+# 확률질량함수 pmf 확률변수가 갖는 값에 해당하 는 확률을 저장하고 있는 함수
 # 베르누이 확률 변수의 기댓값 E(X)=p
 
 # P(X=1)
@@ -244,11 +244,13 @@ plt.clf()
 
 # LS빅데이터 스쿨 학생들의 중간고사 점수는 
 # 평균이 30이고, 분산이 4인 정규분포
-# 상위 5%에 해당하는 학생 수는?
+# 상위 5%에 해당하는 학생 점수는?
+import numpy as np
+from scipy.stats import norm
+
 x=np.arange(28)
-k = norm.pdf(x, loc=30, scale=2)
-# k_95 = 1.645 * 5 + 30 # 38.225
-sum(k>0.01645)
+k = norm.ppf(0.95, loc=30, scale=2)
+k
 
 
 
