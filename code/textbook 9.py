@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pyreadstat
 
 # 데이터 불러오기
 raw_welfare = pd.read_spss("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/koweps/Koweps_hpwc14_2019_beta2.sav")
