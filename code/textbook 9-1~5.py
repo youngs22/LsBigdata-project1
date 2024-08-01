@@ -267,10 +267,6 @@ sex_age_income = welfare.dropna(subset = ["age_group", "sex"]) \
 sex_age_income = welfare.dropna(subset = ["age_group", "sex"]) \
                         .groupby(["age_group", "sex"], as_index = False) \
                         .agg(mean_income = ("income", lambda x: custom_mean(x, dropna=False)))
-x = np.arange(10)
-np.quantile(x, q=0.5)
-
-print(sex_age_income) 
 
 
 # 연령대별 성별 상위 4% 수입
@@ -286,5 +282,20 @@ welfare["age_group"] = welfare["age_group"].astype("object")
 age_sex_income = welfare.dropna(subset="income")\
                     .groupby(["age_group","sex"], as_index = False)\
                     .agg(top4per_income = ("income", lambda x : np.quantile(x, q=0.96)))
+age_sex_income
+
+# 사용자 함수 사용
+def my_f(vec):
+    return vec.sum()
+
+age_sex_income = welfare.dropna(subset="income")\
+                    .groupby(["age_group","sex"], as_index = False)\
+                    .agg(top4per_income = ("income", lambda x : my_f(x)))
+age_sex_income
+
+# 참고
+age_sex_income = welfare.dropna(subset="income")\
+                    .groupby("sex", as_index = False)[["income"]]\
+                    .agg(["mean","std"])
 age_sex_income
 

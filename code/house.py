@@ -1,5 +1,8 @@
-mport pandas as pd
+import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 house = pd.read_csv('data/houseprice/train.csv')
 
@@ -130,3 +133,36 @@ submission2 = house_test2[["Id","SalePrice"]]
 submission2
 
 submission2.to_csv("data/houseprice/sample_submission5.csv", index=False)
+=============================================================
+house
+
+# 월별 이사 횟수 알아보기
+df = house.dropna(subset=["MoSold","SalePrice"])\
+                    .groupby("MoSold", as_index = False)\
+                    .agg(count = ("SalePrice","count"))\
+                    .sort_values("MoSold", ascending = True)
+                    
+sns.barplot(data=df, x="MoSold", y="count", hue="MoSold")
+plt.rcParams.update({"font.family":"Malgun Gothic"})
+plt.xlabel("월(month)")
+plt.ylabel("이사횟수(count)")
+plt.show()
+plt.clf() 
+
+==========================================
+house_train3 = house[["BldgType", "OverallCond"]]
+
+house_train3 = house_train3.dropna(subset=["BldgType","OverallCond"])\
+                    .groupby(["OverallCond", "BldgType"], as_index = False)\
+                    .agg(count = ("BldgType", "count"))\
+                    .sort_values("count", ascending = False)
+sns.barplot(data = house_train3, x = "OverallCond", y = "count", hue = "BldgType")
+legend = plt.legend()
+new_labels = ['단독주택', '타운하우스 끝 유닛', '듀플렉스', '2가구 개조 주택', '타운하우스 내부 유닛']  # 예시 이름
+for text, new_label in zip(legend.get_texts(), new_labels):
+    text.set_text(new_label)
+plt.tight_layout()
+plt.show()
+plt.clf()
+
+
