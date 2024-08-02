@@ -3,18 +3,19 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+house_test = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/test.csv")
+sample = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/sample_submission.csv")
+house_train = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/train.csv")
 
-house = pd.read_csv('data/houseprice/train.csv')
-
-sub.to_csv("data/houseprice/sample_submission.csv", index=False)
+# sample.to_csv("data/houseprice/sample_submission.csv", index=False)
 #인덱스 없애고자 할 때, index=False로 해줌
 
-
+---------------------------------------------------------
 #같은 해에 지어진 그룹을 한 그룹으로 보고 ->평균을 냄
 #test.set에 있는 집값을 예측해보자.
 
 #각 년도별 평균 집값 구함
-house_mean=house.groupby("YearBuilt", as_index=False)\
+house_mean=house_train.groupby("YearBuilt", as_index=False)\
          .agg( 
              house_mean=("SalePrice", "mean")
          )
@@ -37,7 +38,7 @@ house_test
 # 결측치 처리
 house_test["SalePrice"].isna().sum()
 
-price_mean = house["SalePrice"].mean()
+price_mean = house_train["SalePrice"].mean()
 price_mean
 
 house_test = house_test.fillna(price_mean)
@@ -52,7 +53,7 @@ submission.to_csv("data/houseprice/sample_submission2.csv", index=False)
 import pandas as pd
 import numpy as np
 
-house = pd.read_csv('data/houseprice/train.csv')
+house_train = pd.read_csv('data/houseprice/train.csv')
 
 sub.to_csv("data/houseprice/sample_submission.csv", index=False)
 #인덱스 없애고자 할 때, index=False로 해줌
@@ -62,7 +63,7 @@ sub.to_csv("data/houseprice/sample_submission.csv", index=False)
 #test.set에 있는 집값을 예측해보자.
 
 #각 년도별 평균 집값 구함
-house_mean2=house.groupby(["YearBuilt","GarageCars","KitchenQual"], as_index=False)\
+house_mean2=house_train.groupby(["YearBuilt","GarageCars","KitchenQual"], as_index=False)\
          .agg( 
              house_mean=("SalePrice", "mean")
          )
@@ -86,7 +87,7 @@ house_test2
 # 결측치 처리
 house_test2["SalePrice"].isna().sum()
 
-price_mean = house["SalePrice"].mean()
+price_mean = house_train["SalePrice"].mean()
 price_mean
 
 house_test2 = house_test2.fillna(price_mean)
@@ -99,10 +100,8 @@ submission2.to_csv("data/houseprice/sample_submission3.csv", index=False)
 
 =================================================================================
 #각 년도별 평균 집값 구함
-house_mean2=house.groupby(["YearBuilt","Exterior1st","Foundation"], as_index=False)\
-         .agg( 
-             house_mean=("SalePrice", "mean")
-         )
+house_mean2 = house_train.groupby(["YearBuilt","Exterior1st","Foundation"], as_index=False)\
+         .agg(house_mean=("SalePrice", "mean")
 house_mean2
 
 #test 파일에서 id랑년도만 빼줌
@@ -123,7 +122,7 @@ house_test2
 # 결측치 처리
 house_test2["SalePrice"].isna().sum()
 
-price_mean = house["SalePrice"].mean()
+price_mean = house_train["SalePrice"].mean()
 price_mean
 
 house_test2 = house_test2.fillna(price_mean)
@@ -134,10 +133,9 @@ submission2
 
 submission2.to_csv("data/houseprice/sample_submission5.csv", index=False)
 =============================================================
-house
 
 # 월별 이사 횟수 알아보기
-df = house.dropna(subset=["MoSold","SalePrice"])\
+df = house_train.dropna(subset=["MoSold","SalePrice"])\
                     .groupby("MoSold", as_index = False)\
                     .agg(count = ("SalePrice","count"))\
                     .sort_values("MoSold", ascending = True)
@@ -150,7 +148,7 @@ plt.show()
 plt.clf() 
 
 ==========================================
-house_train3 = house[["BldgType", "OverallCond"]]
+house_train3 = house_train[["BldgType", "OverallCond"]]
 
 house_train3 = house_train3.dropna(subset=["BldgType","OverallCond"])\
                     .groupby(["OverallCond", "BldgType"], as_index = False)\
