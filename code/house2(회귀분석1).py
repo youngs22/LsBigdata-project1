@@ -211,6 +211,7 @@ y_pred = model.predict(x)
 # 데이터와 회귀 직선 시각화
 plt.scatter(x, y, color='blue', label='실제 데이터')
 plt.plot(x, y_pred, color='red', label='회귀 직선')
+plt.rcParams['font.family'] ='Malgun Gothic'
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()

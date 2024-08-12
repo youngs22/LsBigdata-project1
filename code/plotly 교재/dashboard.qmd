@@ -1,0 +1,93 @@
+---
+title: "팔머펭귄 대쉬보드"
+author: "Youna Park"
+format: 
+  dashboard:
+    scrolling: true 
+    logo: "palmerpenguins.png" # qmd와 이미지 같은 폴더에 넣어야 뜸
+    nav-buttons: [linkedin, twitter, github]
+---
+
+# {.sidebar}
+글로벌 사이드바
+
+# Page1
+#한개 치면 page 구분됨
+
+## Row
+### {.sidebar}
+그냥 사이드바
+
+### Column
+```{python}
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+
+fig = px.scatter(
+    penguins,
+    x= "bill_length_mm",
+    y= "bill_depth_mm",
+    color="species",
+    )
+fig.update_layout(
+    
+    title = { "text": "<span style = 'color:blue;font-weight:bold'> 팔머펭귄 </span>", \
+        "x" : 0.5, "xanchor": "right"}
+)
+```
+
+## Row {.tabset}
+```{python}
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+
+fig = px.scatter(
+    penguins,
+    x= "bill_length_mm",
+    y= "bill_depth_mm",
+    color="species",
+    )
+fig.update_layout(
+    
+    title = { "text": "<span style = 'color:blue;font-weight:bold'> 팔머펭귄 </span>", \
+        "x" : 0.5, "xanchor": "right"}
+)
+```
+
+```{python}
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+
+fig = px.scatter(
+    penguins,
+    x= "bill_length_mm",
+    y= "bill_depth_mm",
+    color="species",
+    )
+fig.update_layout(
+    
+    title = { "text": "<span style = 'color:blue;font-weight:bold'> 팔머펭귄 </span>", \
+        "x" : 0.5, "xanchor": "right"}
+)
+```
+
+
+```{python}
+```
+
+```{python}
+```
+
+# Page2

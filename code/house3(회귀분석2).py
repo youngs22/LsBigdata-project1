@@ -295,6 +295,7 @@ test_x = house_test[["GrLivArea","GarageArea"]]
 test_x["GrLivArea"].isna().sum()
 test_x["GarageArea"].isna().sum()
 test_x = test_x.fillna(house_test["GarageArea"].mean())
+# test_x.fillna(house_test["GarageArea"].mean(), inplace=True)
 
 # test 값 예측
 pred_y = model.predict(test_x)
@@ -310,7 +311,7 @@ from sklearn.linear_model import LinearRegression
 house_test = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/test.csv")
 sample = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/sample_submission.csv")
 house_train = pd.read_csv("C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/train.csv")
-
+house_test.info()
 house_train = house_train.query("GrLivArea<=4500")
 
 x = house_train[["GrLivArea","GarageArea"]] # 대괄호 두개로 판다스 프레임(2차원)
@@ -350,3 +351,114 @@ ax.set_zlabel('SalePrice')
 plt.tight_layout()
 plt.legend()
 plt.show()
+------------------------------------------------------------------
+# 변수3개
+# 0.20979
+# 숫자형 칼럼을 x에 다 넣음
+x = house_train.select_dtypes(include=[int,float])
+x.info()
+# 숫자형 칼럼 중 필요없는 칼럼 제외하기
+x= x.iloc[:,1:-1]
+# x결측치 제거
+x.isna().sum()
+
+x["LotFrontage"] = x["LotFrontage"].fillna(house_train["LotFrontage"].mean())
+x["MasVnrArea"] = x["MasVnrArea"].fillna(house_train["MasVnrArea"].mean())
+x["GarageYrBlt"] = x["GarageYrBlt"].fillna(house_train["GarageYrBlt"].mean())
+x.mean()
+y = house_train["SalePrice"]
+
+# 선형 회귀 모델 생성
+model = LinearRegression()
+
+# 모델 학습
+model.fit(x, y)
+
+# 회귀 직선의 기울기와 절편
+model.coef_      # 기울기 a
+model.intercept_ # 절편 b
+
+# test 값 예측
+test_x = house_test.select_dtypes(include=[int,float])
+test_x= test_x.iloc[:,1:]
+test_x.isna().sum()
+
+test_x["GarageArea"] = test_x["GarageArea"].fillna(house_test["GarageArea"].mean())
+test_x["GarageCars"] = test_x["GarageCars"].fillna(house_test["GarageCars"].mean())
+test_x["GarageYrBlt"] = test_x["GarageYrBlt"].fillna(house_test["GarageYrBlt"].mean())
+test_x["BsmtHalfBath"] = test_x["BsmtHalfBath"].fillna(house_test["BsmtHalfBath"].mean())
+test_x["BsmtFullBath"] = test_x["BsmtFullBath"].fillna(house_test["BsmtFullBath"].mean())
+test_x["TotalBsmtSF"] = test_x["TotalBsmtSF"].fillna(house_test["TotalBsmtSF"].mean())
+test_x["BsmtUnfSF"] = test_x["BsmtUnfSF"].fillna(house_test["BsmtUnfSF"].mean())
+test_x["BsmtFinSF2"] = test_x["BsmtFinSF2"].fillna(house_test["BsmtFinSF2"].mean())
+test_x["BsmtFinSF1"] = test_x["BsmtFinSF1"].fillna(house_test["BsmtFinSF1"].mean())
+test_x["MasVnrArea"] = test_x["MasVnrArea"].fillna(house_test["MasVnrArea"].mean())
+test_x["LotFrontage"] = test_x["LotFrontage"].fillna(0)
+test_x.mean()
+test_x.info()
+pred_y = model.predict(test_x)
+
+sample["SalePrice"] = pred_y
+
+sample.to_csv('C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/sample_submission25.csv', index=False)
+-------------------
+
+# 선생님 방법
+# 숫자형 칼럼을 x에 다 넣음
+x = house_train.select_dtypes(include=[int,float])
+x.info()
+# 숫자형 칼럼 중 필요없는 칼럼 제외하기
+x= x.iloc[:,1:-1]
+# x결측치 제거
+x.isna().sum()
+
+fill_values = {
+    "LotFrontage" : x["LotFrontage"].mean(),
+    "MasVnrArea" : x["LotFrontage"].mode()[0],
+    "GarageYrBlt" : x["LotFrontage"].mode()[0]
+}
+x=x.fillna(fill_values)
+
+y = house_train["SalePrice"]
+
+# 선형 회귀 모델 생성
+model = LinearRegression()
+
+# 모델 학습
+model.fit(x, y)
+
+# 회귀 직선의 기울기와 절편
+model.coef_      # 기울기 a
+model.intercept_ # 절편 b
+
+# test 값 예측
+test_x = house_test.select_dtypes(include=[int,float])
+test_x= test_x.iloc[:,1:]
+test_x.isna().sum()
+
+fill_values = {
+    "LotFrontage" : test_x["LotFrontage"].mean(),
+    "MasVnrArea" : test_x["LotFrontage"].mode()[0],
+    "GarageYrBlt" : test_x["LotFrontage"].mode()[0]
+}
+test_x=test_x.fillna(fill_values)
+test_x=test_x.fillna(test_x.mean())
+
+
+# test_x["GarageArea"] = test_x["GarageArea"].fillna(house_test["GarageArea"].mean())
+# test_x["GarageCars"] = test_x["GarageCars"].fillna(house_test["GarageCars"].mean())
+# test_x["GarageYrBlt"] = test_x["GarageYrBlt"].fillna(house_test["GarageYrBlt"].mean())
+# test_x["BsmtHalfBath"] = test_x["BsmtHalfBath"].fillna(house_test["BsmtHalfBath"].mean())
+# test_x["BsmtFullBath"] = test_x["BsmtFullBath"].fillna(house_test["BsmtFullBath"].mean())
+# test_x["TotalBsmtSF"] = test_x["TotalBsmtSF"].fillna(house_test["TotalBsmtSF"].mean())
+# test_x["BsmtUnfSF"] = test_x["BsmtUnfSF"].fillna(house_test["BsmtUnfSF"].mean())
+# test_x["BsmtFinSF2"] = test_x["BsmtFinSF2"].fillna(house_test["BsmtFinSF2"].mean())
+# test_x["BsmtFinSF1"] = test_x["BsmtFinSF1"].fillna(house_test["BsmtFinSF1"].mean())
+# test_x["MasVnrArea"] = test_x["MasVnrArea"].fillna(house_test["MasVnrArea"].mean())
+# test_x["LotFrontage"] = test_x["LotFrontage"].fillna(0)
+
+pred_y = model.predict(test_x)
+
+sample["SalePrice"] = pred_y
+
+sample.to_csv('C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/houseprice/sample_submission24.csv', index=False)
