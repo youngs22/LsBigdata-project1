@@ -1,0 +1,44 @@
+---
+title: "project_1조(2)"
+author: "Youna Park"
+format: 
+  dashboard:
+    scrolling: true 
+---
+# Page1
+### 2022년도 전공
+```{python}
+import pandas as pd
+import plotly.express as px
+
+major = pd.read_csv('C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/Majors Awarded_2022.csv')
+
+major["Completions"] = major["Completions"].astype(int)
+
+
+fig = px.treemap(major,
+                 path=[px.Constant('All Majors'), 'CIP2', 'CIP4'], 
+                 values='Completions',
+                 color='CIP2',  
+                 hover_data=['Completions'], 
+                 color_discrete_sequence=  px.colors.qualitative.Pastel  +  px.colors.qualitative.Pastel2 + px.colors.qualitative.Set3
+                )
+
+fig.update_traces(
+    textfont=dict(size=12)  # 폰트 크기 조정 (원하는 크기로 조정 가능)
+)
+
+# 레이아웃 업데이트: 크기 자동 조정
+fig.update_layout(
+    autosize=True,       # 크기 자동 조정
+    title_text = "전공 선호도"
+)
+
+fig.show()
+```
+
+# Page2
+## 연습
+```{python}
+
+```

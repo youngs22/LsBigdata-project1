@@ -1,0 +1,53 @@
+---
+title: "project_1조"
+author: "Youna Park"
+format: 
+  dashboard:
+    scrolling: true 
+---
+
+```{python}
+import pandas as pd
+import plotly.express as px
+
+major = pd.read_csv('C:/Users/USER/Documents/LS빅데이터스쿨/LsBigdata-project1/data/Majors Awarded_2022.csv')
+
+major = major.query("Year == 2022")
+
+major["Completions"] = major["Completions"].astype(int)
+
+
+fig = px.treemap(major,
+                 path=[px.Constant('All Majors'), 'CIP2', 'CIP4'], 
+                 values='Completions',
+                 color='CIP2',  
+                 hover_data=['Completions'], 
+                 color_discrete_sequence=  px.colors.qualitative.Pastel  +  px.colors.qualitative.Pastel2 + px.colors.qualitative.Set3
+                )
+
+# 선택/해제 가능한 항목의 설정
+fig.update_layout(
+    clickmode='event+select',  # 클릭 시 이벤트와 선택 모드 활성화
+    dragmode='select',         # 드래그 모드 설정
+    title={
+        'text': "전공 선호도",
+        'x': 0.018,              # 타이틀의 X 위치
+        'y': 0.90,              # 타이틀의 Y 위치 (1보다 크게 설정하여 위로 이동)
+        'xanchor': 'left',     # 타이틀의 X 앵커
+        'yanchor': 'top',      # 타이틀의 Y 앵커
+        'font': {
+            'size': 20,        # 타이틀 폰트 크기
+            'family': 'Arial', # 타이틀 폰트 패밀리
+        }
+    },
+    autosize=True,
+    font=dict(
+        family="Arial",       # 기본 폰트 패밀리
+        size=12,              # 기본 폰트 크기
+        color="RebeccaPurple" # 기본 폰트 색상
+    ),
+        margin=dict(t=100, l=25, r=25, b=25)  # 여백 조정 (타이틀이 위로 이동하면서 여백을 넓힘)
+)
+
+```
+
