@@ -18,7 +18,7 @@ fig.show()
 from plotly.subplots import make_subplots
 
 fig_subplot = make_subplots(
-    rows=3, cols=3,
+    rows=1, cols=3,
     subplot_titles=("Adeli","Gentoo","Chinstrap")
 )
 
@@ -59,3 +59,4 @@ fig_subplot.update_layout(
     title=dict(text="펭귄종별 부리 길이 vs 깊이",
                x=0.5)
 )
+
