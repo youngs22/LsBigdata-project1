@@ -45,6 +45,7 @@ fig.show()
 ----------------------------------------
 
 from sklearn.linear_model import LinearRegression
+import plotly.graph_objects as go
 
 model = LinearRegression()
 penguins = penguins.dropna()
@@ -104,7 +105,10 @@ regline_y = model.predict(x)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.lineplot(x=x["bill_length_mm"], y=regline_y, s=1, hue=penguins["species"], pallete="deep")
-sns.scatterplot(x["bill_length_mm"], y, color="black")
+sns.scatterplot(x=penguins["bill_length_mm"], y=penguins["bill_depth_mm"], 
+                hue=penguins["species"], palette="deep",
+                legend=False)
+sns.scatterplot(x=penguins["bill_length_mm"], y=regline_y,
+                color="black")
 plt.show()
 plt.clf()
