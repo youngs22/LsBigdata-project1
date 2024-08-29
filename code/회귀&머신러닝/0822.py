@@ -245,7 +245,7 @@ reg_line = model.predict(df_k)
 
 plt.plot(k, reg_line, color="red")
 plt.scatter(train_df["x"], train_df["y"], color="blue")
-
+plt.ylim(-5, 5)
 #======================================
 # test에 있는 걸로 y값 추측해보기!!
 
@@ -329,7 +329,7 @@ reg_line = model.predict(df_k)
 
 plt.plot(k, reg_line, color="red")
 plt.scatter(train_df["x"], train_df["y"], color="blue")
-
+plt.ylim(-5, 5)
 # 20차 모델 성능
 for i in range(2, 21):
     test_df[f"x{i}"] = test_df["x"] ** i
