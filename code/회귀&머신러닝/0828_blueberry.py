@@ -275,3 +275,5 @@ pred_y = model.predict(test_x)
 # 결과를 submission 파일로 저장
 sub_df["yield"] = pred_y
 sub_df.to_csv("sample_submission_knn.csv", index=False)
+
+
